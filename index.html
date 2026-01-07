@@ -10,12 +10,15 @@
   <link rel="apple-touch-icon" href="auramax.png">
 </head>
 <body>
-  <!-- Floating Orbs Background -->
-  <div class="orbs-container">
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
+  <!-- Ambient Background -->
+  <div class="ambient-bg">
+    <div class="ambient-orb ambient-orb-1"></div>
+    <div class="ambient-orb ambient-orb-2"></div>
+    <div class="ambient-orb ambient-orb-3"></div>
   </div>
+
+  <!-- Noise Texture Overlay -->
+  <div class="noise-overlay"></div>
 
   <!-- Navigation -->
   <nav>
@@ -36,30 +39,36 @@
   <!-- Hero Section -->
   <section class="hero">
     <div class="container">
-      <div class="hero-content fade-in">
-        <div class="hero-badge">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+      <div class="hero-content">
+        <div class="hero-badge tilt-element">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
             <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
           </svg>
           <span>Available on iOS</span>
         </div>
-        <h1>Become your<br><span class="gradient-text">best self.</span></h1>
-        <p>Track skincare, fitness, style, and daily habits. Get AI-powered insights that actually help you level up.</p>
+        <h1 class="hero-title">
+          <span class="title-line">Become your</span>
+          <span class="title-line gradient-text">best self.</span>
+        </h1>
+        <p class="hero-desc">Track skincare, fitness, style, and daily habits. Get AI-powered insights that actually help you level up.</p>
         <div class="hero-buttons">
-          <a href="https://apps.apple.com/app/auramax" class="btn btn-primary">
+          <a href="https://apps.apple.com/app/auramax" class="btn btn-primary tilt-element">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
               <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
             </svg>
             Download for iPhone
           </a>
-          <a href="#features" class="btn btn-secondary">Learn More</a>
+          <a href="#features" class="btn btn-secondary tilt-element">Learn More</a>
         </div>
       </div>
-      <div class="hero-visual fade-in">
-        <div class="phone-mockup">
-          <div class="phone-placeholder">
-            <span>App Screenshot</span>
-            <p>Add app-screenshot.png</p>
+      <div class="hero-visual">
+        <div class="phone-container tilt-element" data-tilt-scale="1.02">
+          <div class="phone-glow"></div>
+          <div class="phone-frame">
+            <div class="phone-screen">
+              <span>App Screenshot</span>
+              <p>app-screenshot.png</p>
+            </div>
           </div>
         </div>
       </div>
@@ -69,126 +78,110 @@
   <!-- Interactive Aura Score Section -->
   <section class="aura-section" id="aura-score">
     <div class="container">
-      <div class="section-header fade-in-up">
+      <div class="section-header">
+        <span class="section-label">Your Progress</span>
         <h2>Discover your <span class="gradient-text">Aura Score</span></h2>
-        <p>Your personalized metric that evolves with your journey</p>
+        <p>A personalized metric that evolves with your journey</p>
       </div>
 
-      <div class="aura-demo fade-in-up">
-        <div class="aura-ring">
-          <svg viewBox="0 0 200 200" class="aura-circle">
-            <defs>
-              <linearGradient id="auraGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" class="gradient-stop-1"/>
-                <stop offset="100%" class="gradient-stop-2"/>
-              </linearGradient>
-            </defs>
-            <circle cx="100" cy="100" r="90" class="aura-bg"/>
-            <circle cx="100" cy="100" r="90" class="aura-progress" stroke="url(#auraGradient)"/>
-          </svg>
-          <div class="aura-score-display">
-            <span class="aura-number">87</span>
-            <span class="aura-label">Aura Score</span>
+      <div class="aura-demo tilt-element" data-tilt-scale="1.01">
+        <div class="aura-card">
+          <div class="aura-ring-container">
+            <svg viewBox="0 0 200 200" class="aura-ring">
+              <defs>
+                <linearGradient id="auraGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" class="gradient-stop-1"/>
+                  <stop offset="100%" class="gradient-stop-2"/>
+                </linearGradient>
+              </defs>
+              <circle cx="100" cy="100" r="85" class="aura-track"/>
+              <circle cx="100" cy="100" r="85" class="aura-progress" stroke="url(#auraGradient)"/>
+            </svg>
+            <div class="aura-score-inner">
+              <span class="aura-number" data-target="87">0</span>
+              <span class="aura-label">Aura Score</span>
+            </div>
           </div>
-        </div>
 
-        <div class="aura-stats">
-          <div class="aura-stat">
-            <div class="stat-bar">
-              <div class="stat-fill" style="--fill-width: 92%"></div>
+          <div class="aura-metrics">
+            <div class="metric">
+              <div class="metric-header">
+                <span class="metric-name">Skincare</span>
+                <span class="metric-value">92%</span>
+              </div>
+              <div class="metric-bar"><div class="metric-fill" data-width="92"></div></div>
             </div>
-            <span class="stat-label">Skincare</span>
-            <span class="stat-value">92%</span>
-          </div>
-          <div class="aura-stat">
-            <div class="stat-bar">
-              <div class="stat-fill" style="--fill-width: 78%"></div>
+            <div class="metric">
+              <div class="metric-header">
+                <span class="metric-name">Fitness</span>
+                <span class="metric-value">78%</span>
+              </div>
+              <div class="metric-bar"><div class="metric-fill" data-width="78"></div></div>
             </div>
-            <span class="stat-label">Fitness</span>
-            <span class="stat-value">78%</span>
-          </div>
-          <div class="aura-stat">
-            <div class="stat-bar">
-              <div class="stat-fill" style="--fill-width: 85%"></div>
+            <div class="metric">
+              <div class="metric-header">
+                <span class="metric-name">Style</span>
+                <span class="metric-value">85%</span>
+              </div>
+              <div class="metric-bar"><div class="metric-fill" data-width="85"></div></div>
             </div>
-            <span class="stat-label">Style</span>
-            <span class="stat-value">85%</span>
-          </div>
-          <div class="aura-stat">
-            <div class="stat-bar">
-              <div class="stat-fill" style="--fill-width: 94%"></div>
+            <div class="metric">
+              <div class="metric-header">
+                <span class="metric-name">Habits</span>
+                <span class="metric-value">94%</span>
+              </div>
+              <div class="metric-bar"><div class="metric-fill" data-width="94"></div></div>
             </div>
-            <span class="stat-label">Habits</span>
-            <span class="stat-value">94%</span>
           </div>
         </div>
       </div>
-
-      <p class="aura-tagline fade-in-up">Watch your aura transform as you level up</p>
     </div>
   </section>
 
   <!-- Features Section -->
   <section class="features" id="features">
     <div class="container">
-      <div class="section-header fade-in-up">
+      <div class="section-header">
+        <span class="section-label">Features</span>
         <h2>Everything you need to <span class="gradient-text">level up</span></h2>
         <p>Powerful tools designed to help you track progress and build habits that stick.</p>
       </div>
       <div class="features-grid">
-        <div class="feature-card fade-in-up" data-tilt>
-          <div class="feature-icon">
-            <span>🪞</span>
-            <div class="icon-glow"></div>
-          </div>
+        <div class="feature-card tilt-element">
+          <div class="card-shine"></div>
+          <div class="feature-icon"><span>🪞</span></div>
           <h3>Progress Photos</h3>
-          <p>Document your transformation with organized progress photos and side-by-side comparisons.</p>
-          <div class="feature-shine"></div>
+          <p>Document your transformation with organized photos and side-by-side comparisons.</p>
         </div>
-        <div class="feature-card fade-in-up" data-tilt>
-          <div class="feature-icon">
-            <span>🧠</span>
-            <div class="icon-glow"></div>
-          </div>
+        <div class="feature-card tilt-element">
+          <div class="card-shine"></div>
+          <div class="feature-icon"><span>🧠</span></div>
           <h3>AI Insights</h3>
           <p>Get personalized recommendations powered by AI to optimize your routine.</p>
-          <div class="feature-shine"></div>
         </div>
-        <div class="feature-card fade-in-up" data-tilt>
-          <div class="feature-icon">
-            <span>📊</span>
-            <div class="icon-glow"></div>
-          </div>
+        <div class="feature-card tilt-element">
+          <div class="card-shine"></div>
+          <div class="feature-icon"><span>📊</span></div>
           <h3>Habit Tracking</h3>
           <p>Build consistency with daily tracking for skincare, fitness, sleep, and more.</p>
-          <div class="feature-shine"></div>
         </div>
-        <div class="feature-card fade-in-up" data-tilt>
-          <div class="feature-icon">
-            <span>🎯</span>
-            <div class="icon-glow"></div>
-          </div>
+        <div class="feature-card tilt-element">
+          <div class="card-shine"></div>
+          <div class="feature-icon"><span>🎯</span></div>
           <h3>Goal Setting</h3>
           <p>Set clear goals and milestones to stay motivated on your journey.</p>
-          <div class="feature-shine"></div>
         </div>
-        <div class="feature-card fade-in-up" data-tilt>
-          <div class="feature-icon">
-            <span>💊</span>
-            <div class="icon-glow"></div>
-          </div>
+        <div class="feature-card tilt-element">
+          <div class="card-shine"></div>
+          <div class="feature-icon"><span>💊</span></div>
           <h3>Routine Builder</h3>
           <p>Create and track skincare routines, workout plans, and daily habits.</p>
-          <div class="feature-shine"></div>
         </div>
-        <div class="feature-card fade-in-up" data-tilt>
-          <div class="feature-icon">
-            <span>🔒</span>
-            <div class="icon-glow"></div>
-          </div>
+        <div class="feature-card tilt-element">
+          <div class="card-shine"></div>
+          <div class="feature-icon"><span>🔒</span></div>
           <h3>Private & Secure</h3>
           <p>Your data stays yours. We never sell or share your information.</p>
-          <div class="feature-shine"></div>
         </div>
       </div>
     </div>
@@ -196,188 +189,185 @@
 
   <!-- Marquee Section -->
   <section class="marquee-section">
-    <div class="marquee">
+    <div class="marquee-track">
       <div class="marquee-content">
-        <span>SKINCARE</span>
-        <span class="marquee-dot"></span>
-        <span>FITNESS</span>
-        <span class="marquee-dot"></span>
-        <span>STYLE</span>
-        <span class="marquee-dot"></span>
-        <span>HABITS</span>
-        <span class="marquee-dot"></span>
-        <span>CONFIDENCE</span>
-        <span class="marquee-dot"></span>
-        <span>TRANSFORMATION</span>
-        <span class="marquee-dot"></span>
-        <span>SKINCARE</span>
-        <span class="marquee-dot"></span>
-        <span>FITNESS</span>
-        <span class="marquee-dot"></span>
-        <span>STYLE</span>
-        <span class="marquee-dot"></span>
-        <span>HABITS</span>
-        <span class="marquee-dot"></span>
-        <span>CONFIDENCE</span>
-        <span class="marquee-dot"></span>
-        <span>TRANSFORMATION</span>
-        <span class="marquee-dot"></span>
+        <span>SKINCARE</span><span class="dot"></span>
+        <span>FITNESS</span><span class="dot"></span>
+        <span>STYLE</span><span class="dot"></span>
+        <span>HABITS</span><span class="dot"></span>
+        <span>CONFIDENCE</span><span class="dot"></span>
+        <span>TRANSFORM</span><span class="dot"></span>
+        <span>SKINCARE</span><span class="dot"></span>
+        <span>FITNESS</span><span class="dot"></span>
+        <span>STYLE</span><span class="dot"></span>
+        <span>HABITS</span><span class="dot"></span>
+        <span>CONFIDENCE</span><span class="dot"></span>
+        <span>TRANSFORM</span><span class="dot"></span>
       </div>
     </div>
   </section>
 
   <!-- CTA Section -->
   <section class="cta">
-    <div class="cta-content fade-in-up">
-      <div class="cta-glow"></div>
-      <h2>Start your transformation</h2>
-      <p>Join thousands taking control of their self-improvement journey.</p>
-      <a href="https://apps.apple.com/app/auramax" class="btn btn-primary btn-large">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
-        </svg>
-        Download Free
-      </a>
+    <div class="container">
+      <div class="cta-card tilt-element" data-tilt-scale="1.01">
+        <div class="cta-glow"></div>
+        <span class="section-label">Get Started</span>
+        <h2>Start your transformation</h2>
+        <p>Join thousands taking control of their self-improvement journey.</p>
+        <a href="https://apps.apple.com/app/auramax" class="btn btn-primary btn-large">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+          </svg>
+          Download Free
+        </a>
+      </div>
     </div>
   </section>
 
   <!-- Footer -->
   <footer>
     <div class="container">
-      <span class="copyright">© 2026 Auramax. All rights reserved.</span>
-      <ul class="footer-links">
-        <li><a href="privacy.html">Privacy Policy</a></li>
-        <li><a href="terms.html">Terms of Service</a></li>
-        <li><a href="mailto:jasprcodes@gmail.com">Contact</a></li>
-      </ul>
+      <div class="footer-content">
+        <a href="/" class="footer-logo">
+          <img src="auramax.png" alt="Auramax">
+        </a>
+        <ul class="footer-links">
+          <li><a href="privacy.html">Privacy</a></li>
+          <li><a href="terms.html">Terms</a></li>
+          <li><a href="mailto:jasprcodes@gmail.com">Contact</a></li>
+        </ul>
+        <span class="copyright">© 2026 Auramax</span>
+      </div>
     </div>
   </footer>
 
-  <!-- Cursor Glow Effect -->
-  <div class="cursor-glow"></div>
-
   <script>
-    // Scroll animations
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, observerOptions);
-
-    document.querySelectorAll('.fade-in, .fade-in-up').forEach(el => {
-      observer.observe(el);
-    });
-
-    // Smooth gradient color animation
-    let hue = 160; // Start with mint/teal
-
-    function updateGradient() {
-      hue = (hue + 0.5) % 360;
-      const color1 = `hsl(${hue}, 80%, 70%)`;
-      const color2 = `hsl(${(hue + 40) % 360}, 80%, 60%)`;
-
-      document.documentElement.style.setProperty('--gradient-1', color1);
-      document.documentElement.style.setProperty('--gradient-2', color2);
-
-      requestAnimationFrame(updateGradient);
+    // Smooth gradient animation
+    let hue = 160;
+    function animateGradient() {
+      hue = (hue + 0.3) % 360;
+      const c1 = `hsl(${hue}, 70%, 65%)`;
+      const c2 = `hsl(${(hue + 50) % 360}, 70%, 55%)`;
+      document.documentElement.style.setProperty('--gradient-1', c1);
+      document.documentElement.style.setProperty('--gradient-2', c2);
+      requestAnimationFrame(animateGradient);
     }
+    animateGradient();
 
-    updateGradient();
+    // 3D Tilt Effect
+    class TiltEffect {
+      constructor(element) {
+        this.element = element;
+        this.scale = element.dataset.tiltScale || 1;
+        this.max = 8;
+        this.shine = element.querySelector('.card-shine');
+        this.bindEvents();
+      }
 
-    // Cursor glow effect
-    const cursorGlow = document.querySelector('.cursor-glow');
-    let mouseX = 0, mouseY = 0;
-    let glowX = 0, glowY = 0;
+      bindEvents() {
+        this.element.addEventListener('mouseenter', () => this.element.style.transition = 'transform 0.1s ease');
+        this.element.addEventListener('mousemove', (e) => this.onMouseMove(e));
+        this.element.addEventListener('mouseleave', () => this.onMouseLeave());
+      }
 
-    document.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-    });
-
-    function animateCursor() {
-      glowX += (mouseX - glowX) * 0.1;
-      glowY += (mouseY - glowY) * 0.1;
-      cursorGlow.style.left = glowX + 'px';
-      cursorGlow.style.top = glowY + 'px';
-      requestAnimationFrame(animateCursor);
-    }
-
-    animateCursor();
-
-    // Feature card tilt effect
-    document.querySelectorAll('.feature-card').forEach(card => {
-      card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
+      onMouseMove(e) {
+        const rect = this.element.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
-        const rotateX = (y - centerY) / 20;
-        const rotateY = (centerX - x) / 20;
 
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+        const rotateX = ((y - centerY) / centerY) * -this.max;
+        const rotateY = ((x - centerX) / centerX) * this.max;
 
-        // Move shine effect
-        const shine = card.querySelector('.feature-shine');
-        shine.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.15) 0%, transparent 50%)`;
+        this.element.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(${this.scale}, ${this.scale}, ${this.scale})`;
+
+        if (this.shine) {
+          this.shine.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.15) 0%, transparent 60%)`;
+        }
+      }
+
+      onMouseLeave() {
+        this.element.style.transition = 'transform 0.5s ease';
+        this.element.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+        if (this.shine) {
+          this.shine.style.background = 'transparent';
+        }
+      }
+    }
+
+    document.querySelectorAll('.tilt-element').forEach(el => new TiltEffect(el));
+
+    // Intersection Observer for animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+
+          // Animate aura score
+          if (entry.target.classList.contains('aura-demo')) {
+            animateAuraScore();
+          }
+        }
       });
+    }, { threshold: 0.2 });
 
-      card.addEventListener('mouseleave', () => {
-        card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
-        const shine = card.querySelector('.feature-shine');
-        shine.style.background = 'none';
-      });
+    document.querySelectorAll('.hero-content, .hero-visual, .section-header, .aura-demo, .feature-card, .cta-card').forEach(el => {
+      observer.observe(el);
     });
 
-    // Aura score animation
-    const auraSection = document.querySelector('.aura-section');
+    // Aura Score Animation
     let auraAnimated = false;
-
-    const auraObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting && !auraAnimated) {
-          auraAnimated = true;
-          animateAuraScore();
-        }
-      });
-    }, { threshold: 0.5 });
-
-    auraObserver.observe(auraSection);
-
     function animateAuraScore() {
+      if (auraAnimated) return;
+      auraAnimated = true;
+
       const scoreEl = document.querySelector('.aura-number');
-      const targetScore = 87;
-      let currentScore = 0;
+      const target = parseInt(scoreEl.dataset.target);
+      let current = 0;
 
       const interval = setInterval(() => {
-        currentScore += 1;
-        scoreEl.textContent = currentScore;
-        if (currentScore >= targetScore) {
-          clearInterval(interval);
-        }
-      }, 20);
+        current += 1;
+        scoreEl.textContent = current;
+        if (current >= target) clearInterval(interval);
+      }, 18);
 
-      // Animate stat bars
-      document.querySelectorAll('.stat-fill').forEach(bar => {
-        bar.style.width = bar.style.getPropertyValue('--fill-width');
+      document.querySelectorAll('.metric-fill').forEach(bar => {
+        const width = bar.dataset.width;
+        setTimeout(() => {
+          bar.style.width = width + '%';
+        }, 200);
       });
     }
 
-    // Parallax orbs
+    // Parallax effect on ambient orbs
+    let mouseX = 0, mouseY = 0;
     document.addEventListener('mousemove', (e) => {
-      const x = e.clientX / window.innerWidth;
-      const y = e.clientY / window.innerHeight;
+      mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+      mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+    });
 
-      document.querySelectorAll('.orb').forEach((orb, i) => {
-        const speed = (i + 1) * 20;
-        orb.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+    function animateOrbs() {
+      const orbs = document.querySelectorAll('.ambient-orb');
+      orbs.forEach((orb, i) => {
+        const speed = (i + 1) * 15;
+        const x = mouseX * speed;
+        const y = mouseY * speed;
+        orb.style.transform = `translate(${x}px, ${y}px)`;
+      });
+      requestAnimationFrame(animateOrbs);
+    }
+    animateOrbs();
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
       });
     });
   </script>
