@@ -138,6 +138,43 @@
     </div>
   </section>
 
+  <!-- AI Section - Mr. Eli -->
+  <section class="eli-section" id="ai">
+    <div class="container">
+      <div class="eli-card tilt-element" data-tilt-scale="1.01">
+        <div class="eli-glow"></div>
+        <div class="eli-content">
+          <div class="eli-avatar-container">
+            <div class="eli-avatar">
+              <img src="Images/eli.png" alt="Mr. Eli" class="eli-static">
+              <img src="Images/EliWave.png" alt="Mr. Eli waving" class="eli-wave">
+            </div>
+            <div class="eli-pulse"></div>
+          </div>
+          <div class="eli-text">
+            <span class="section-label">AI-Powered</span>
+            <h2>Meet <span class="gradient-text">Mr. Eli</span></h2>
+            <p>Your personal AI coach that helps you level up. Get tailored advice, track your progress, and receive insights designed just for you.</p>
+            <div class="eli-features">
+              <div class="eli-feature">
+                <span class="eli-feature-icon">💬</span>
+                <span>Personalized advice</span>
+              </div>
+              <div class="eli-feature">
+                <span class="eli-feature-icon">📈</span>
+                <span>Progress insights</span>
+              </div>
+              <div class="eli-feature">
+                <span class="eli-feature-icon">🎯</span>
+                <span>Goal recommendations</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Features Section -->
   <section class="features" id="features">
     <div class="container">
@@ -313,7 +350,7 @@
       });
     }, { threshold: 0.2 });
 
-    document.querySelectorAll('.hero-content, .hero-visual, .section-header, .aura-demo, .feature-card, .cta-card').forEach(el => {
+    document.querySelectorAll('.hero-content, .hero-visual, .section-header, .aura-demo, .eli-card, .feature-card, .cta-card').forEach(el => {
       observer.observe(el);
     });
 
