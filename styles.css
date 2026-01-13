@@ -43,23 +43,71 @@
   --radius-full: 9999px;
 }
 
-/* Color shift animation */
+/* Rainbow color shift - full spectrum every 5 seconds */
 @keyframes colorShift {
-  0% { --accent-h: 168; } /* Teal */
-  25% { --accent-h: 280; } /* Purple */
-  50% { --accent-h: 340; } /* Pink */
-  75% { --accent-h: 200; } /* Blue */
-  100% { --accent-h: 168; } /* Back to Teal */
+  0% { --accent-h: 0; }     /* Red */
+  14% { --accent-h: 30; }   /* Orange */
+  28% { --accent-h: 60; }   /* Yellow */
+  42% { --accent-h: 120; }  /* Green */
+  57% { --accent-h: 180; }  /* Cyan */
+  71% { --accent-h: 240; }  /* Blue */
+  85% { --accent-h: 300; }  /* Magenta */
+  100% { --accent-h: 360; } /* Back to Red */
 }
 
 @property --accent-h {
   syntax: '<number>';
-  initial-value: 168;
+  initial-value: 180;
   inherits: true;
 }
 
 body {
-  animation: colorShift 8s ease-in-out infinite;
+  animation: colorShift 5s linear infinite;
+}
+
+/* Custom Cursor */
+.cursor {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s, height 0.2s, background 0.2s;
+  mix-blend-mode: difference;
+}
+
+.cursor-follower {
+  position: fixed;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s, height 0.3s, border 0.3s;
+}
+
+.cursor-hover {
+  width: 12px;
+  height: 12px;
+  background: #fff;
+}
+
+.follower-hover {
+  width: 60px;
+  height: 60px;
+  border-color: #fff;
+}
+
+/* Hide cursor on mobile */
+@media (max-width: 768px) {
+  .cursor, .cursor-follower {
+    display: none;
+  }
 }
 
 /* Reset */
@@ -95,6 +143,11 @@ body {
   color: var(--text);
   line-height: 1.6;
   overflow-x: hidden;
+  cursor: none;
+}
+
+a, button, .btn {
+  cursor: none;
 }
 
 /* Typography */

@@ -10,6 +10,10 @@
   <link rel="apple-touch-icon" href="auramax.png">
 </head>
 <body>
+  <!-- Custom Cursor -->
+  <div class="cursor"></div>
+  <div class="cursor-follower"></div>
+
   <!-- Ambient Background -->
   <div class="ambient-bg">
     <div class="ambient-orb ambient-orb-1"></div>
@@ -73,30 +77,6 @@
               <p>app-screenshot.png</p>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Stats Section -->
-  <section class="stats-section">
-    <div class="container">
-      <div class="stats-grid">
-        <div class="stat-item">
-          <div class="stat-number" data-target="10">0K+</div>
-          <div class="stat-label">Active Users</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number" data-target="4.9">0</div>
-          <div class="stat-label">App Store Rating</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number" data-target="500">0K+</div>
-          <div class="stat-label">Habits Tracked</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number" data-target="95">0%</div>
-          <div class="stat-label">User Satisfaction</div>
         </div>
       </div>
     </div>
@@ -346,16 +326,12 @@
             animateAuraScore();
           }
 
-          // Animate stats
-          if (entry.target.classList.contains('stat-item')) {
-            animateStatNumber(entry.target);
-          }
         }
       });
     }, { threshold: 0.2 });
 
     // Observe all animated elements
-    document.querySelectorAll('.hero-content, .hero-visual, .section-header, .aura-demo, .eli-card, .feature-card, .cta-card, .step-card, .stat-item').forEach(el => {
+    document.querySelectorAll('.hero-content, .hero-visual, .section-header, .aura-demo, .eli-card, .feature-card, .cta-card, .step-card').forEach(el => {
       observer.observe(el);
     });
 
@@ -383,47 +359,6 @@
       });
     }
 
-    // Stat Number Animation
-    const animatedStats = new Set();
-    function animateStatNumber(statItem) {
-      if (animatedStats.has(statItem)) return;
-      animatedStats.add(statItem);
-
-      const numberEl = statItem.querySelector('.stat-number');
-      const text = numberEl.textContent;
-      const hasK = text.includes('K');
-      const hasPercent = text.includes('%');
-      const target = parseFloat(numberEl.dataset.target);
-
-      let current = 0;
-      const duration = 1500;
-      const steps = 60;
-      const increment = target / steps;
-
-      const interval = setInterval(() => {
-        current += increment;
-        if (current >= target) {
-          current = target;
-          clearInterval(interval);
-        }
-
-        let displayValue;
-        if (target === 4.9) {
-          displayValue = current.toFixed(1);
-        } else {
-          displayValue = Math.floor(current);
-        }
-
-        if (hasK) {
-          numberEl.textContent = displayValue + 'K+';
-        } else if (hasPercent) {
-          numberEl.textContent = displayValue + '%';
-        } else {
-          numberEl.textContent = displayValue;
-        }
-      }, duration / steps);
-    }
-
     // Smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
@@ -432,6 +367,67 @@
         if (target) {
           target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
+      });
+    });
+
+    // Custom cursor
+    const cursor = document.querySelector('.cursor');
+    const follower = document.querySelector('.cursor-follower');
+    let mouseX = 0, mouseY = 0;
+    let followerX = 0, followerY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      cursor.style.left = mouseX + 'px';
+      cursor.style.top = mouseY + 'px';
+    });
+
+    // Smooth follower
+    function animateFollower() {
+      followerX += (mouseX - followerX) * 0.15;
+      followerY += (mouseY - followerY) * 0.15;
+      follower.style.left = followerX + 'px';
+      follower.style.top = followerY + 'px';
+      requestAnimationFrame(animateFollower);
+    }
+    animateFollower();
+
+    // Cursor hover effects
+    document.querySelectorAll('a, button, .btn, .feature-card, .step-card, .eli-card').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.classList.add('cursor-hover');
+        follower.classList.add('follower-hover');
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.classList.remove('cursor-hover');
+        follower.classList.remove('follower-hover');
+      });
+    });
+
+    // Magnetic buttons
+    document.querySelectorAll('.btn-primary').forEach(btn => {
+      btn.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+      });
+      btn.addEventListener('mouseleave', () => {
+        btn.style.transform = '';
+      });
+    });
+
+    // Card tilt effect
+    document.querySelectorAll('.feature-card, .aura-card, .eli-card, .cta-card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        card.style.transform = `perspective(1000px) rotateY(${x * 10}deg) rotateX(${-y * 10}deg) scale(1.02)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
       });
     });
   </script>
