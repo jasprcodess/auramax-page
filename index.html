@@ -17,6 +17,9 @@
     <div class="ambient-orb ambient-orb-3"></div>
   </div>
 
+  <!-- Grid Overlay -->
+  <div class="grid-overlay"></div>
+
   <!-- Noise Texture Overlay -->
   <div class="noise-overlay"></div>
 
@@ -276,52 +279,6 @@
     </div>
   </section>
 
-  <!-- Testimonials Section -->
-  <section class="testimonials-section" id="testimonials">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-label">Testimonials</span>
-        <h2>Loved by <span class="gradient-text">thousands</span></h2>
-        <p>See what our users are saying about their transformation.</p>
-      </div>
-      <div class="testimonials-grid">
-        <div class="testimonial-card">
-          <div class="testimonial-stars">★★★★★</div>
-          <p class="testimonial-text">"Finally an app that actually helps me stay consistent. The AI insights are surprisingly accurate and helpful."</p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">JM</div>
-            <div class="testimonial-info">
-              <span class="testimonial-name">Jake M.</span>
-              <span class="testimonial-handle">@jakem_fit</span>
-            </div>
-          </div>
-        </div>
-        <div class="testimonial-card">
-          <div class="testimonial-stars">★★★★★</div>
-          <p class="testimonial-text">"I've tried so many self-improvement apps. This is the first one that's actually stuck. Love the clean design."</p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">SR</div>
-            <div class="testimonial-info">
-              <span class="testimonial-name">Sarah R.</span>
-              <span class="testimonial-handle">@sarahglowup</span>
-            </div>
-          </div>
-        </div>
-        <div class="testimonial-card">
-          <div class="testimonial-stars">★★★★★</div>
-          <p class="testimonial-text">"The progress photos feature is game-changing. Seeing my transformation week by week keeps me motivated."</p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">DL</div>
-            <div class="testimonial-info">
-              <span class="testimonial-name">David L.</span>
-              <span class="testimonial-handle">@david.levels</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- Marquee Section -->
   <section class="marquee-section">
     <div class="marquee-track">
@@ -398,7 +355,7 @@
     }, { threshold: 0.2 });
 
     // Observe all animated elements
-    document.querySelectorAll('.hero-content, .hero-visual, .section-header, .aura-demo, .eli-card, .feature-card, .cta-card, .step-card, .stat-item, .testimonial-card').forEach(el => {
+    document.querySelectorAll('.hero-content, .hero-visual, .section-header, .aura-demo, .eli-card, .feature-card, .cta-card, .step-card, .stat-item').forEach(el => {
       observer.observe(el);
     });
 
