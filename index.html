@@ -280,18 +280,6 @@
   </footer>
 
   <script>
-    // Smooth gradient animation
-    let hue = 160;
-    function animateGradient() {
-      hue = (hue + 0.3) % 360;
-      const c1 = `hsl(${hue}, 70%, 65%)`;
-      const c2 = `hsl(${(hue + 50) % 360}, 70%, 55%)`;
-      document.documentElement.style.setProperty('--gradient-1', c1);
-      document.documentElement.style.setProperty('--gradient-2', c2);
-      requestAnimationFrame(animateGradient);
-    }
-    animateGradient();
-
     // 3D Tilt Effect
     class TiltEffect {
       constructor(element) {
