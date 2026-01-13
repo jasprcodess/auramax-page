@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reset Password - Auramax</title>
+  <meta name="description" content="Reset your Auramax account password.">
+  <link rel="icon" type="image/png" href="../auramax.png">
+  <link rel="apple-touch-icon" href="../auramax.png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    @property --accent-hue { syntax: '<number>'; initial-value: 180; inherits: true; }
+    @keyframes colorShift { 0%, 100% { --accent-hue: 180; } 16% { --accent-hue: 220; } 33% { --accent-hue: 280; } 50% { --accent-hue: 320; } 66% { --accent-hue: 30; } 83% { --accent-hue: 120; } }
+    html { animation: colorShift 12s ease-in-out infinite; }
+    body { background: #080808; color: #f5f5f5; }
+    .gradient-text { color: hsl(var(--accent-hue), 80%, 55%); }
+    .bg-accent { background: hsl(var(--accent-hue), 80%, 55%); }
+    .bg-accent-dim { background: hsl(var(--accent-hue), 80%, 55%, 0.1); }
+    .border-accent { border-color: hsl(var(--accent-hue), 80%, 55%); }
+    .text-accent { color: hsl(var(--accent-hue), 80%, 55%); }
+    .ambient-orb { position: fixed; border-radius: 50%; filter: blur(150px); opacity: 0.07; background: hsl(var(--accent-hue), 80%, 55%); pointer-events: none; }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: #080808; }
+    ::-webkit-scrollbar-thumb { background: hsl(var(--accent-hue), 80%, 55%); border-radius: 4px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spinner { width: 40px; height: 40px; border: 3px solid transparent; border-top-color: hsl(var(--accent-hue), 80%, 55%); border-radius: 50%; animation: spin 1s linear infinite; }
+  </style>
+</head>
+<body class="antialiased">
+  <div class="ambient-orb w-[800px] h-[800px] -top-[400px] -right-[300px] fixed"></div>
+  <div class="ambient-orb w-[600px] h-[600px] -bottom-[300px] -left-[200px] fixed"></div>
+
+  <nav class="fixed top-0 left-0 right-0 z-50 p-4 flex justify-center">
+    <div class="flex items-center gap-2 px-4 py-2 bg-black/85 backdrop-blur-xl border border-white/[0.06] rounded-full">
+      <a href="/"><img src="../auramax.png" alt="Auramax" class="h-[26px] w-auto"></a>
+      <a href="/" class="px-5 py-2 bg-white text-black text-sm font-semibold rounded-full hover:bg-zinc-200 transition-colors">Back to Home</a>
+    </div>
+  </nav>
+
+  <div class="min-h-screen flex items-center justify-center pt-32 pb-16 px-6">
+    <div class="w-full max-w-[420px] p-6 bg-white/[0.02] border border-white/[0.06] rounded-2xl">
+
+      <!-- Loading State -->
+      <div id="state-loading" class="text-center py-8">
+        <div class="spinner mx-auto mb-4"></div>
+        <p class="text-zinc-400">Verifying your reset link...</p>
+      </div>
+
+      <!-- Error State -->
+      <div id="state-error" class="text-center py-8 hidden">
+        <div class="w-[72px] h-[72px] rounded-full bg-red-500/10 flex items-center justify-center mx-auto mb-5">
+          <svg class="w-12 h-12 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-width="2"/><path stroke-width="2" d="M15 9l-6 6M9 9l6 6"/></svg>
+        </div>
+        <h2 class="text-xl font-semibold mb-3">Link Expired or Invalid</h2>
+        <p id="error-message" class="text-zinc-400 mb-6">This password reset link has expired or is no longer valid.</p>
+        <a href="/" class="inline-flex items-center justify-center px-6 py-3 bg-accent text-black font-semibold rounded-full hover:opacity-90 transition-opacity">Return to Homepage</a>
+        <p class="text-xs text-zinc-500 mt-4">Need a new link? Open the AuraMax app and request another password reset.</p>
+      </div>
+
+      <!-- Form State -->
+      <div id="state-form" class="hidden">
+        <div class="text-center mb-6">
+          <span class="inline-block text-xs font-semibold tracking-[0.12em] uppercase text-accent px-4 py-2 bg-accent-dim rounded-full mb-4">Password Reset</span>
+          <h2 class="text-xl font-semibold mb-2">Create a new <span class="gradient-text">password</span></h2>
+          <p class="text-sm text-zinc-400">Enter your new password below to regain access to your account.</p>
+        </div>
+        <form id="reset-form" class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium mb-2">New Password</label>
+            <div class="relative">
+              <input type="password" id="password" placeholder="Enter new password" autocomplete="new-password" required minlength="6" class="w-full px-4 py-3 bg-white/[0.02] border border-white/[0.06] rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:border-accent pr-12">
+              <button type="button" id="toggle-pw" class="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white">
+                <svg class="eye-show w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3" stroke-width="2"/></svg>
+                <svg class="eye-hide w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23" stroke-width="2"/></svg>
+              </button>
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-2">Confirm Password</label>
+            <div class="relative">
+              <input type="password" id="confirm-password" placeholder="Confirm new password" autocomplete="new-password" required minlength="6" class="w-full px-4 py-3 bg-white/[0.02] border border-white/[0.06] rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:border-accent pr-12">
+              <button type="button" id="toggle-confirm" class="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white">
+                <svg class="eye-show w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3" stroke-width="2"/></svg>
+                <svg class="eye-hide w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23" stroke-width="2"/></svg>
+              </button>
+            </div>
+          </div>
+          <div id="form-error" class="bg-red-500/10 border border-red-500/20 rounded-xl p-3 text-sm text-red-500 hidden"></div>
+          <div class="bg-white/[0.02] border border-white/[0.06] rounded-xl p-3">
+            <p class="text-xs font-semibold text-zinc-500 uppercase tracking-wide mb-2">Strongly recommended:</p>
+            <div class="grid grid-cols-2 gap-2 text-xs">
+              <div id="check-length" class="flex items-center gap-2 text-zinc-500"><div class="w-3 h-3 rounded-full border-2 border-current"></div><span>8+ characters</span></div>
+              <div id="check-upper" class="flex items-center gap-2 text-zinc-500"><div class="w-3 h-3 rounded-full border-2 border-current"></div><span>Uppercase</span></div>
+              <div id="check-lower" class="flex items-center gap-2 text-zinc-500"><div class="w-3 h-3 rounded-full border-2 border-current"></div><span>Lowercase</span></div>
+              <div id="check-number" class="flex items-center gap-2 text-zinc-500"><div class="w-3 h-3 rounded-full border-2 border-current"></div><span>Number</span></div>
+            </div>
+          </div>
+          <button type="submit" id="submit-btn" class="w-full py-3 bg-accent text-black font-semibold rounded-full hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
+            <span class="btn-text">Update Password</span>
+            <div class="btn-spinner spinner hidden" style="width:20px;height:20px;border-width:2px;"></div>
+          </button>
+        </form>
+      </div>
+
+      <!-- Success State -->
+      <div id="state-success" class="text-center py-8 hidden">
+        <div class="w-[72px] h-[72px] rounded-full bg-accent-dim flex items-center justify-center mx-auto mb-5">
+          <svg class="w-12 h-12 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-width="2"/><path stroke-width="2" d="M9 12l2 2 4-4"/></svg>
+        </div>
+        <h2 class="text-xl font-semibold mb-3">Password Updated</h2>
+        <p class="text-zinc-400 mb-6">Your password has been successfully changed. You can now return to the AuraMax app and sign in with your new password.</p>
+        <a href="/" class="inline-flex items-center justify-center px-6 py-3 bg-accent text-black font-semibold rounded-full hover:opacity-90 transition-opacity">Return to Homepage</a>
+      </div>
+    </div>
+  </div>
+
+  <footer class="border-t border-white/[0.06] py-5">
+    <div class="max-w-[1200px] mx-auto px-6">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
+        <a href="/" class="opacity-40 hover:opacity-60 transition-opacity"><img src="../auramax.png" alt="Auramax" class="h-[22px] w-auto"></a>
+        <ul class="flex items-center gap-5">
+          <li><a href="/privacy.html" class="text-sm text-zinc-400 hover:text-accent transition-colors">Privacy</a></li>
+          <li><a href="/terms.html" class="text-sm text-zinc-400 hover:text-accent transition-colors">Terms</a></li>
+          <li><a href="mailto:jasprcodes@gmail.com" class="text-sm text-zinc-400 hover:text-accent transition-colors">Contact</a></li>
+        </ul>
+        <span class="text-sm text-zinc-500">&copy; 2025 Auramax</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../cursor.js"></script>
+  <script>
+    (function() {
+      'use strict';
+
+      // ===== CONFIG =====
+      var SUPABASE_URL = 'https://sowxwoadsozyrscbwckg.supabase.co';
+      var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNvd3h3b2Fkc296eXJzY2J3Y2tnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjY4Mzc4MjksImV4cCI6MjA4MjQxMzgyOX0.1H25O0pxu9Dyeq8E8ZNQJ8agXLOYCCx3QICoDUaavIo';
+      var TIMEOUT_MS = 10000;
+
+      // ===== DOM ELEMENTS =====
+      var stateLoading = document.getElementById('state-loading');
+      var stateError = document.getElementById('state-error');
+      var stateForm = document.getElementById('state-form');
+      var stateSuccess = document.getElementById('state-success');
+      var errorMessage = document.getElementById('error-message');
+      var form = document.getElementById('reset-form');
+      var passwordInput = document.getElementById('password');
+      var confirmInput = document.getElementById('confirm-password');
+      var formError = document.getElementById('form-error');
+      var submitBtn = document.getElementById('submit-btn');
+
+      var supabaseClient = null;
+
+      // ===== STATE FUNCTIONS =====
+      function setLoading(show) {
+        if (show) {
+          stateLoading.classList.remove('hidden');
+          stateError.classList.add('hidden');
+          stateForm.classList.add('hidden');
+          stateSuccess.classList.add('hidden');
+        } else {
+          stateLoading.classList.add('hidden');
+        }
+      }
+
+      function showError(msg) {
+        stateLoading.classList.add('hidden');
+        stateForm.classList.add('hidden');
+        stateSuccess.classList.add('hidden');
+        stateError.classList.remove('hidden');
+        errorMessage.textContent = msg || 'This password reset link has expired or is no longer valid.';
+        console.log('[reset-password] Error shown');
+      }
+
+      function showForm() {
+        stateLoading.classList.add('hidden');
+        stateError.classList.add('hidden');
+        stateSuccess.classList.add('hidden');
+        stateForm.classList.remove('hidden');
+        passwordInput.focus();
+        console.log('[reset-password] Form shown');
+      }
+
+      function showSuccess() {
+        stateLoading.classList.add('hidden');
+        stateError.classList.add('hidden');
+        stateForm.classList.add('hidden');
+        stateSuccess.classList.remove('hidden');
+        console.log('[reset-password] Success shown');
+      }
+
+      function setSubmitting(submitting) {
+        submitBtn.disabled = submitting;
+        submitBtn.querySelector('.btn-text').classList.toggle('hidden', submitting);
+        submitBtn.querySelector('.btn-spinner').classList.toggle('hidden', !submitting);
+      }
+
+      function showFormError(msg) {
+        formError.textContent = msg;
+        formError.classList.remove('hidden');
+      }
+
+      function hideFormError() {
+        formError.classList.add('hidden');
+      }
+
+      // ===== TIMEOUT HELPER =====
+      function withTimeout(promise, ms) {
+        return new Promise(function(resolve, reject) {
+          var timer = setTimeout(function() {
+            reject(new Error('TIMEOUT'));
+          }, ms);
+
+          promise.then(function(result) {
+            clearTimeout(timer);
+            resolve(result);
+          }).catch(function(err) {
+            clearTimeout(timer);
+            reject(err);
+          });
+        });
+      }
+
+      // ===== PASSWORD TOGGLE =====
+      function setupPasswordToggle(inputId, btnId) {
+        var input = document.getElementById(inputId);
+        var btn = document.getElementById(btnId);
+        if (!btn) return;
+        btn.addEventListener('click', function() {
+          var show = btn.querySelector('.eye-show');
+          var hide = btn.querySelector('.eye-hide');
+          if (input.type === 'password') {
+            input.type = 'text';
+            show.classList.add('hidden');
+            hide.classList.remove('hidden');
+          } else {
+            input.type = 'password';
+            show.classList.remove('hidden');
+            hide.classList.add('hidden');
+          }
+        });
+      }
+
+      // ===== PASSWORD VALIDATION =====
+      function validatePassword(pw) {
+        var checks = {
+          length: pw.length >= 8,
+          upper: /[A-Z]/.test(pw),
+          lower: /[a-z]/.test(pw),
+          number: /[0-9]/.test(pw)
+        };
+
+        Object.keys(checks).forEach(function(key) {
+          var el = document.getElementById('check-' + key);
+          if (!el) return;
+          var passed = checks[key];
+          if (passed) {
+            el.classList.remove('text-zinc-500');
+            el.classList.add('text-accent');
+            el.querySelector('div').style.background = 'hsl(var(--accent-hue), 80%, 55%)';
+          } else {
+            el.classList.add('text-zinc-500');
+            el.classList.remove('text-accent');
+            el.querySelector('div').style.background = 'transparent';
+          }
+        });
+
+        return checks;
+      }
+
+      // ===== GLOBAL ERROR HANDLERS =====
+      window.addEventListener('error', function(e) {
+        console.log('[reset-password] Uncaught error');
+        if (stateLoading && !stateLoading.classList.contains('hidden')) {
+          showError('Something went wrong. Please try again or request a new reset link.');
+        }
+      });
+
+      window.addEventListener('unhandledrejection', function(e) {
+        console.log('[reset-password] Unhandled promise rejection');
+        if (stateLoading && !stateLoading.classList.contains('hidden')) {
+          showError('Something went wrong. Please try again or request a new reset link.');
+        }
+      });
+
+      // ===== MAIN INIT =====
+      function init() {
+        console.log('[reset-password] init started');
+
+        // Validate config
+        if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+          showError('Configuration error. Please contact support.');
+          return;
+        }
+
+        // Check supabase-js loaded
+        if (!window.supabase || !window.supabase.createClient) {
+          showError('Failed to load. Please refresh the page.');
+          return;
+        }
+
+        // Parse URL params
+        var params = new URLSearchParams(window.location.search);
+        var tokenHash = params.get('token_hash');
+        var type = params.get('type');
+        var urlError = params.get('error');
+        var urlErrorDesc = params.get('error_description');
+
+        // Clear URL for security
+        if (window.history.replaceState) {
+          window.history.replaceState(null, '', window.location.pathname);
+        }
+
+        // Check for URL error
+        if (urlError) {
+          var msg = urlErrorDesc ? urlErrorDesc.replace(/\+/g, ' ') : 'This link is invalid or has expired.';
+          showError(msg);
+          return;
+        }
+
+        // Validate token_hash
+        if (!tokenHash) {
+          showError('Invalid reset link. Please request a new password reset email from the app.');
+          return;
+        }
+
+        // Validate type
+        if (type && type !== 'recovery') {
+          showError('This link is not a password reset link.');
+          return;
+        }
+
+        // Create Supabase client
+        console.log('[reset-password] Creating Supabase client');
+        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // Verify OTP with timeout
+        console.log('[reset-password] verifyOtp started');
+        setLoading(true);
+
+        var verifyPromise = supabaseClient.auth.verifyOtp({
+          type: 'recovery',
+          token_hash: tokenHash
+        });
+
+        withTimeout(verifyPromise, TIMEOUT_MS)
+          .then(function(result) {
+            var data = result.data;
+            var verifyError = result.error;
+
+            if (verifyError) {
+              console.log('[reset-password] verifyOtp failed:', verifyError.message);
+              showError('This reset link is invalid or has expired. Please request a new password reset email.');
+              return;
+            }
+
+            if (!data || !data.session) {
+              console.log('[reset-password] verifyOtp failed: no session');
+              showError('This reset link is invalid or has expired. Please request a new password reset email.');
+              return;
+            }
+
+            console.log('[reset-password] verifyOtp success');
+            showForm();
+          })
+          .catch(function(err) {
+            if (err.message === 'TIMEOUT') {
+              console.log('[reset-password] verifyOtp timed out');
+              showError('Network issue. Please check your connection and try again.');
+            } else {
+              console.log('[reset-password] verifyOtp error:', err.message);
+              showError('Something went wrong. Please try again or request a new reset link.');
+            }
+          });
+      }
+
+      // ===== FORM SUBMIT =====
+      function handleSubmit(e) {
+        e.preventDefault();
+        hideFormError();
+
+        var pw = passwordInput.value;
+        var confirm = confirmInput.value;
+
+        // Validate
+        if (pw.length < 6) {
+          showFormError('Password must be at least 6 characters.');
+          return;
+        }
+
+        if (pw !== confirm) {
+          showFormError('Passwords do not match.');
+          return;
+        }
+
+        if (!supabaseClient) {
+          showFormError('Session expired. Please refresh and try again.');
+          return;
+        }
+
+        setSubmitting(true);
+        console.log('[reset-password] updateUser started');
+
+        var updatePromise = supabaseClient.auth.updateUser({ password: pw });
+
+        withTimeout(updatePromise, TIMEOUT_MS)
+          .then(function(result) {
+            var updateError = result.error;
+
+            if (updateError) {
+              console.log('[reset-password] updateUser failed:', updateError.message);
+              var msg = updateError.message;
+              if (msg.indexOf('same as') !== -1) {
+                msg = 'New password must be different from your current password.';
+              }
+              showFormError(msg);
+              setSubmitting(false);
+              return;
+            }
+
+            console.log('[reset-password] updateUser success');
+
+            // Sign out and show success
+            supabaseClient.auth.signOut().finally(function() {
+              showSuccess();
+            });
+          })
+          .catch(function(err) {
+            setSubmitting(false);
+            if (err.message === 'TIMEOUT') {
+              console.log('[reset-password] updateUser timed out');
+              showFormError('Network issue. Please check your connection and try again.');
+            } else {
+              console.log('[reset-password] updateUser error:', err.message);
+              showFormError('Something went wrong. Please try again.');
+            }
+          });
+      }
+
+      // ===== SETUP =====
+      setupPasswordToggle('password', 'toggle-pw');
+      setupPasswordToggle('confirm-password', 'toggle-confirm');
+
+      passwordInput.addEventListener('input', function() {
+        validatePassword(passwordInput.value);
+        hideFormError();
+      });
+
+      confirmInput.addEventListener('input', function() {
+        hideFormError();
+      });
+
+      form.addEventListener('submit', handleSubmit);
+
+      // Run init
+      init();
+    })();
+  </script>
+</body>
+</html>
