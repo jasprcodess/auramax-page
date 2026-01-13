@@ -5,76 +5,106 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Auramax - Your Looksmaxing Journey Starts Here</title>
   <meta name="description" content="Track your glow-up with AI-powered insights. The ultimate self-improvement app for skincare, fitness, style, and more.">
-  <link rel="stylesheet" href="styles.css">
   <link rel="icon" type="image/png" href="auramax.png">
   <link rel="apple-touch-icon" href="auramax.png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            accent: 'hsl(var(--accent-hue, 180), 80%, 55%)',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @property --accent-hue {
+      syntax: '<number>';
+      initial-value: 180;
+      inherits: true;
+    }
+    @keyframes colorShift {
+      0%, 100% { --accent-hue: 180; }
+      16% { --accent-hue: 220; }
+      33% { --accent-hue: 280; }
+      50% { --accent-hue: 320; }
+      66% { --accent-hue: 30; }
+      83% { --accent-hue: 120; }
+    }
+    html { animation: colorShift 12s ease-in-out infinite; }
+    body { background: #080808; color: #f5f5f5; }
+    .gradient-text { color: hsl(var(--accent-hue), 80%, 55%); }
+    .bg-accent { background: hsl(var(--accent-hue), 80%, 55%); }
+    .bg-accent-dim { background: hsl(var(--accent-hue), 80%, 55%, 0.1); }
+    .border-accent { border-color: hsl(var(--accent-hue), 80%, 55%); }
+    .text-accent { color: hsl(var(--accent-hue), 80%, 55%); }
+    .ambient-orb { position: fixed; border-radius: 50%; filter: blur(150px); opacity: 0.07; background: hsl(var(--accent-hue), 80%, 55%); pointer-events: none; }
+    .particle { position: fixed; width: 3px; height: 3px; background: hsl(var(--accent-hue), 80%, 55%); border-radius: 50%; opacity: 0.15; pointer-events: none; animation: floatParticle linear infinite; }
+    @keyframes floatParticle { 0% { transform: translateY(100vh); opacity: 0; } 10% { opacity: 0.15; } 90% { opacity: 0.15; } 100% { transform: translateY(-100px); opacity: 0; } }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    @keyframes pulse { 0% { transform: scale(1); opacity: 0.4; } 100% { transform: scale(1.4); opacity: 0; } }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: #080808; }
+    ::-webkit-scrollbar-thumb { background: hsl(var(--accent-hue), 80%, 55%); border-radius: 4px; }
+    .card-hover { transition: border-color 0.3s, transform 0.3s; }
+    .card-hover:hover { border-color: hsl(var(--accent-hue), 80%, 55%); }
+    .aura-progress { stroke-dasharray: 534; stroke-dashoffset: 534; transition: stroke-dashoffset 2s ease-out; }
+    .aura-progress.animate { stroke-dashoffset: 70; }
+    .metric-fill { width: 0; transition: width 1.5s ease-out; }
+    .eli-avatar .eli-wave { opacity: 0; transition: opacity 0.3s; }
+    .eli-avatar:hover .eli-wave { opacity: 1; }
+    .eli-avatar:hover .eli-static { opacity: 0; }
+  </style>
 </head>
-<body>
-  <!-- Custom Cursor -->
-  <div class="cursor"></div>
-  <div class="cursor-follower"></div>
+<body class="antialiased">
+  <div class="ambient-orb w-[800px] h-[800px] -top-[400px] -right-[300px] fixed"></div>
+  <div class="ambient-orb w-[600px] h-[600px] -bottom-[300px] -left-[200px] fixed"></div>
+  <div class="fixed inset-0 pointer-events-none z-[1]" style="background-image: linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px); background-size: 80px 80px; mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);"></div>
+  <div id="particles" class="fixed inset-0 pointer-events-none z-0 overflow-hidden"></div>
 
-  <!-- Ambient Background -->
-  <div class="ambient-bg">
-    <div class="ambient-orb ambient-orb-1"></div>
-    <div class="ambient-orb ambient-orb-2"></div>
-    <div class="ambient-orb ambient-orb-3"></div>
-  </div>
-
-  <!-- Grid Overlay -->
-  <div class="grid-overlay"></div>
-
-  <!-- Noise Texture Overlay -->
-  <div class="noise-overlay"></div>
-
-  <!-- Navigation -->
-  <nav>
-    <div class="nav-pill">
-      <a href="/" class="logo">
-        <img src="auramax.png" alt="Auramax">
-      </a>
-      <ul class="nav-links">
-        <li><a href="#features">Features</a></li>
-        <li><a href="#aura-score">Aura Score</a></li>
-        <li><a href="privacy.html">Privacy</a></li>
-        <li><a href="terms.html">Terms</a></li>
+  <nav class="fixed top-0 left-0 right-0 z-50 p-4 flex justify-center">
+    <div class="flex items-center gap-2 px-4 py-2 bg-black/85 backdrop-blur-xl border border-white/[0.06] rounded-full">
+      <a href="/"><img src="auramax.png" alt="Auramax" class="h-[26px] w-auto"></a>
+      <ul class="hidden md:flex items-center gap-6 mx-5">
+        <li><a href="#features" class="text-sm font-medium text-zinc-400 hover:text-white transition-colors">Features</a></li>
+        <li><a href="#aura-score" class="text-sm font-medium text-zinc-400 hover:text-white transition-colors">Aura Score</a></li>
+        <li><a href="privacy.html" class="text-sm font-medium text-zinc-400 hover:text-white transition-colors">Privacy</a></li>
+        <li><a href="terms.html" class="text-sm font-medium text-zinc-400 hover:text-white transition-colors">Terms</a></li>
       </ul>
-      <a href="https://apps.apple.com/app/auramax" class="nav-cta">Get the App</a>
+      <a href="https://apps.apple.com/app/auramax" class="px-5 py-2 bg-white text-black text-sm font-semibold rounded-full hover:bg-zinc-200 transition-colors">Get the App</a>
     </div>
   </nav>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="container">
-      <div class="hero-content">
-        <div class="hero-badge">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
-          </svg>
+  <section class="min-h-screen flex items-center pt-32 pb-16 px-6">
+    <div class="max-w-[1200px] mx-auto w-full grid md:grid-cols-2 gap-16 items-center">
+      <div class="text-center md:text-left">
+        <div class="inline-flex items-center gap-2 px-4 py-2 bg-accent-dim rounded-full text-sm font-medium text-accent mb-6">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
           <span>Available on iOS</span>
         </div>
-        <h1 class="hero-title">
-          <span class="title-line">Become your</span>
-          <span class="title-line gradient-text">best self.</span>
+        <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] mb-5">
+          <span class="block">Become your</span>
+          <span class="block gradient-text">best self.</span>
         </h1>
-        <p class="hero-desc">Track skincare, fitness, style, and daily habits. Get AI-powered insights that actually help you level up.</p>
-        <div class="hero-buttons">
-          <a href="https://apps.apple.com/app/auramax" class="btn btn-primary">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
-            </svg>
+        <p class="text-lg text-zinc-400 max-w-[460px] mb-8 mx-auto md:mx-0">Track skincare, fitness, style, and daily habits. Get AI-powered insights that actually help you level up.</p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+          <a href="https://apps.apple.com/app/auramax" class="inline-flex items-center justify-center gap-2 px-7 py-3 bg-accent text-black font-semibold rounded-full hover:opacity-90 transition-opacity">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
             Download for iPhone
           </a>
-          <a href="#features" class="btn btn-secondary">Learn More</a>
+          <a href="#features" class="inline-flex items-center justify-center px-7 py-3 border border-zinc-700 text-white font-semibold rounded-full hover:border-accent transition-colors">Learn More</a>
         </div>
       </div>
-      <div class="hero-visual">
-        <div class="phone-container">
-          <div class="phone-glow"></div>
-          <div class="phone-frame">
-            <div class="phone-screen">
-              <span>App Screenshot</span>
-              <p>app-screenshot.png</p>
+      <div class="flex justify-center">
+        <div class="relative" style="animation: float 8s ease-in-out infinite;">
+          <div class="w-[270px] h-[540px] bg-gradient-to-br from-zinc-800 to-zinc-900 border border-white/10 rounded-[44px] p-[10px] relative">
+            <div class="absolute top-[14px] left-1/2 -translate-x-1/2 w-[90px] h-[26px] bg-black rounded-[16px] z-10"></div>
+            <div class="w-full h-full bg-zinc-950 rounded-[34px] border border-dashed border-white/[0.06] flex flex-col items-center justify-center gap-2">
+              <span class="text-zinc-500 text-sm">App Screenshot</span>
+              <p class="text-xs text-zinc-600">app-screenshot.png</p>
             </div>
           </div>
         </div>
@@ -82,127 +112,83 @@
     </div>
   </section>
 
-  <!-- How It Works Section -->
-  <section class="how-section" id="how-it-works">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-label">How It Works</span>
-        <h2>Start in <span class="gradient-text">3 simple steps</span></h2>
-        <p>Getting started with Auramax takes less than a minute.</p>
+  <section id="how-it-works" class="py-24 px-6">
+    <div class="max-w-[1200px] mx-auto">
+      <div class="text-center mb-16">
+        <span class="inline-block text-xs font-semibold tracking-[0.12em] uppercase text-accent px-4 py-2 bg-accent-dim rounded-full mb-5">How It Works</span>
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-3">Start in <span class="gradient-text">3 simple steps</span></h2>
+        <p class="text-zinc-400 text-lg">Getting started with Auramax takes less than a minute.</p>
       </div>
-      <div class="how-steps">
-        <div class="step-card">
-          <div class="step-number">1</div>
-          <h3>Download the App</h3>
-          <p>Get Auramax free from the App Store. No account required to explore.</p>
+      <div class="grid md:grid-cols-3 gap-5">
+        <div class="text-center p-8 bg-white/[0.02] border border-white/[0.06] rounded-2xl card-hover">
+          <div class="w-12 h-12 flex items-center justify-center bg-accent text-black rounded-full text-xl font-bold mx-auto mb-4">1</div>
+          <h3 class="text-lg font-semibold mb-2">Download the App</h3>
+          <p class="text-sm text-zinc-400">Get Auramax free from the App Store. No account required to explore.</p>
         </div>
-        <div class="step-card">
-          <div class="step-number">2</div>
-          <h3>Set Your Goals</h3>
-          <p>Tell us what you want to improve - skincare, fitness, style, or habits.</p>
+        <div class="text-center p-8 bg-white/[0.02] border border-white/[0.06] rounded-2xl card-hover">
+          <div class="w-12 h-12 flex items-center justify-center bg-accent text-black rounded-full text-xl font-bold mx-auto mb-4">2</div>
+          <h3 class="text-lg font-semibold mb-2">Set Your Goals</h3>
+          <p class="text-sm text-zinc-400">Tell us what you want to improve - skincare, fitness, style, or habits.</p>
         </div>
-        <div class="step-card">
-          <div class="step-number">3</div>
-          <h3>Track & Improve</h3>
-          <p>Log daily progress and get personalized AI insights to level up.</p>
+        <div class="text-center p-8 bg-white/[0.02] border border-white/[0.06] rounded-2xl card-hover">
+          <div class="w-12 h-12 flex items-center justify-center bg-accent text-black rounded-full text-xl font-bold mx-auto mb-4">3</div>
+          <h3 class="text-lg font-semibold mb-2">Track & Improve</h3>
+          <p class="text-sm text-zinc-400">Log daily progress and get personalized AI insights to level up.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Interactive Aura Score Section -->
-  <section class="aura-section" id="aura-score">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-label">Your Progress</span>
-        <h2>Discover your <span class="gradient-text">Aura Score</span></h2>
-        <p>A personalized metric that evolves with your journey</p>
+  <section id="aura-score" class="py-24 px-6">
+    <div class="max-w-[1200px] mx-auto">
+      <div class="text-center mb-16">
+        <span class="inline-block text-xs font-semibold tracking-[0.12em] uppercase text-accent px-4 py-2 bg-accent-dim rounded-full mb-5">Your Progress</span>
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-3">Discover your <span class="gradient-text">Aura Score</span></h2>
+        <p class="text-zinc-400 text-lg max-w-[450px] mx-auto">A personalized metric that evolves with your journey</p>
       </div>
-
-      <div class="aura-demo">
-        <div class="aura-card">
-          <div class="aura-ring-container">
-            <svg viewBox="0 0 200 200" class="aura-ring">
-              <defs>
-                <linearGradient id="auraGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" class="gradient-stop-1"/>
-                  <stop offset="100%" class="gradient-stop-2"/>
-                </linearGradient>
-              </defs>
-              <circle cx="100" cy="100" r="85" class="aura-track"/>
-              <circle cx="100" cy="100" r="85" class="aura-progress" stroke="url(#auraGradient)"/>
+      <div class="max-w-[700px] mx-auto">
+        <div id="aura-card" class="p-8 bg-white/[0.02] border border-white/[0.06] rounded-2xl grid md:grid-cols-[auto_1fr] gap-8 items-center card-hover">
+          <div class="relative w-[180px] h-[180px] mx-auto md:mx-0">
+            <svg viewBox="0 0 200 200" class="w-full h-full -rotate-90 overflow-visible">
+              <defs><linearGradient id="auraGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="hsl(var(--accent-hue), 80%, 55%)"/><stop offset="100%" stop-color="hsl(var(--accent-hue), 80%, 55%)"/></linearGradient></defs>
+              <circle cx="100" cy="100" r="85" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="6"/>
+              <circle id="aura-progress" cx="100" cy="100" r="85" fill="none" stroke="url(#auraGradient)" stroke-width="6" stroke-linecap="round" class="aura-progress"/>
             </svg>
-            <div class="aura-score-inner">
-              <span class="aura-number" data-target="87">0</span>
-              <span class="aura-label">Aura Score</span>
+            <div class="absolute inset-0 flex flex-col items-center justify-center">
+              <span id="aura-number" class="text-5xl font-bold gradient-text tracking-tight">0</span>
+              <span class="text-xs text-zinc-500 uppercase tracking-[0.1em] mt-2">Aura Score</span>
             </div>
           </div>
-
-          <div class="aura-metrics">
-            <div class="metric">
-              <div class="metric-header">
-                <span class="metric-name">Skincare</span>
-                <span class="metric-value">92%</span>
-              </div>
-              <div class="metric-bar"><div class="metric-fill" data-width="92"></div></div>
-            </div>
-            <div class="metric">
-              <div class="metric-header">
-                <span class="metric-name">Fitness</span>
-                <span class="metric-value">78%</span>
-              </div>
-              <div class="metric-bar"><div class="metric-fill" data-width="78"></div></div>
-            </div>
-            <div class="metric">
-              <div class="metric-header">
-                <span class="metric-name">Style</span>
-                <span class="metric-value">85%</span>
-              </div>
-              <div class="metric-bar"><div class="metric-fill" data-width="85"></div></div>
-            </div>
-            <div class="metric">
-              <div class="metric-header">
-                <span class="metric-name">Habits</span>
-                <span class="metric-value">94%</span>
-              </div>
-              <div class="metric-bar"><div class="metric-fill" data-width="94"></div></div>
-            </div>
+          <div class="space-y-4">
+            <div><div class="flex justify-between text-sm mb-1"><span class="text-zinc-400">Skincare</span><span class="font-semibold gradient-text">92%</span></div><div class="h-1 bg-white/[0.06] rounded-full overflow-hidden"><div class="metric-fill h-full rounded-full bg-accent" data-width="92"></div></div></div>
+            <div><div class="flex justify-between text-sm mb-1"><span class="text-zinc-400">Fitness</span><span class="font-semibold gradient-text">78%</span></div><div class="h-1 bg-white/[0.06] rounded-full overflow-hidden"><div class="metric-fill h-full rounded-full bg-accent" data-width="78"></div></div></div>
+            <div><div class="flex justify-between text-sm mb-1"><span class="text-zinc-400">Style</span><span class="font-semibold gradient-text">85%</span></div><div class="h-1 bg-white/[0.06] rounded-full overflow-hidden"><div class="metric-fill h-full rounded-full bg-accent" data-width="85"></div></div></div>
+            <div><div class="flex justify-between text-sm mb-1"><span class="text-zinc-400">Habits</span><span class="font-semibold gradient-text">94%</span></div><div class="h-1 bg-white/[0.06] rounded-full overflow-hidden"><div class="metric-fill h-full rounded-full bg-accent" data-width="94"></div></div></div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- AI Section - Mr. Eli -->
-  <section class="eli-section" id="ai">
-    <div class="container">
-      <div class="eli-card">
-        <div class="eli-glow"></div>
-        <div class="eli-content">
-          <div class="eli-avatar-container">
-            <div class="eli-avatar">
-              <img src="Images/eli.png" alt="Mr. Eli" class="eli-static">
-              <img src="Images/EliWave.png" alt="Mr. Eli waving" class="eli-wave">
+  <section id="ai" class="py-20 px-6">
+    <div class="max-w-[1200px] mx-auto">
+      <div class="max-w-[850px] mx-auto p-8 bg-white/[0.02] border border-white/[0.06] rounded-2xl card-hover">
+        <div class="flex flex-col md:flex-row items-center gap-8">
+          <div class="relative flex-shrink-0">
+            <div class="eli-avatar w-[140px] h-[140px] rounded-full overflow-hidden border-2 border-accent bg-zinc-800 relative">
+              <img src="Images/eli.png" alt="Mr. Eli" class="eli-static w-full h-full object-cover absolute inset-0 transition-opacity">
+              <img src="Images/EliWave.png" alt="Mr. Eli waving" class="eli-wave w-full h-full object-cover absolute inset-0 transition-opacity">
             </div>
-            <div class="eli-pulse"></div>
+            <div class="absolute -inset-2 border border-accent rounded-full" style="animation: pulse 2.5s ease-out infinite;"></div>
           </div>
-          <div class="eli-text">
-            <span class="section-label">AI-Powered</span>
-            <h2>Meet <span class="gradient-text">Mr. Eli</span></h2>
-            <p>Your personal AI coach that helps you level up. Get tailored advice, track your progress, and receive insights designed just for you.</p>
-            <div class="eli-features">
-              <div class="eli-feature">
-                <span class="eli-feature-icon">💬</span>
-                <span>Personalized advice</span>
-              </div>
-              <div class="eli-feature">
-                <span class="eli-feature-icon">📈</span>
-                <span>Progress insights</span>
-              </div>
-              <div class="eli-feature">
-                <span class="eli-feature-icon">🎯</span>
-                <span>Goal recommendations</span>
-              </div>
+          <div class="flex-1 text-center md:text-left">
+            <span class="inline-block text-xs font-semibold tracking-[0.12em] uppercase text-accent px-4 py-2 bg-accent-dim rounded-full mb-4">AI-Powered</span>
+            <h2 class="text-2xl md:text-3xl font-bold tracking-tight mb-3">Meet <span class="gradient-text">Mr. Eli</span></h2>
+            <p class="text-zinc-400 leading-relaxed mb-5">Your personal AI coach that helps you level up. Get tailored advice, track your progress, and receive insights designed just for you.</p>
+            <div class="flex flex-wrap justify-center md:justify-start gap-2">
+              <div class="flex items-center gap-2 px-4 py-2 bg-white/[0.02] border border-white/[0.06] rounded-full text-sm text-zinc-400"><span>💬</span><span>Personalized advice</span></div>
+              <div class="flex items-center gap-2 px-4 py-2 bg-white/[0.02] border border-white/[0.06] rounded-full text-sm text-zinc-400"><span>📈</span><span>Progress insights</span></div>
+              <div class="flex items-center gap-2 px-4 py-2 bg-white/[0.02] border border-white/[0.06] rounded-full text-sm text-zinc-400"><span>🎯</span><span>Goal recommendations</span></div>
             </div>
           </div>
         </div>
@@ -210,379 +196,96 @@
     </div>
   </section>
 
-  <!-- Features Section -->
-  <section class="features" id="features">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-label">Features</span>
-        <h2>Everything you need to <span class="gradient-text">level up</span></h2>
-        <p>Powerful tools designed to help you track progress and build habits that stick.</p>
+  <section id="features" class="py-24 px-6">
+    <div class="max-w-[1200px] mx-auto">
+      <div class="text-center mb-16">
+        <span class="inline-block text-xs font-semibold tracking-[0.12em] uppercase text-accent px-4 py-2 bg-accent-dim rounded-full mb-5">Features</span>
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-3">Everything you need to <span class="gradient-text">level up</span></h2>
+        <p class="text-zinc-400 text-lg max-w-[500px] mx-auto">Powerful tools designed to help you track progress and build habits that stick.</p>
       </div>
-      <div class="features-grid">
-        <div class="feature-card">
-          <div class="card-shine"></div>
-          <div class="feature-icon"><span>🪞</span></div>
-          <h3>Progress Photos</h3>
-          <p>Document your transformation with organized photos and side-by-side comparisons.</p>
-        </div>
-        <div class="feature-card">
-          <div class="card-shine"></div>
-          <div class="feature-icon"><span>🧠</span></div>
-          <h3>AI Insights</h3>
-          <p>Get personalized recommendations powered by AI to optimize your routine.</p>
-        </div>
-        <div class="feature-card">
-          <div class="card-shine"></div>
-          <div class="feature-icon"><span>📊</span></div>
-          <h3>Habit Tracking</h3>
-          <p>Build consistency with daily tracking for skincare, fitness, sleep, and more.</p>
-        </div>
-        <div class="feature-card">
-          <div class="card-shine"></div>
-          <div class="feature-icon"><span>🎯</span></div>
-          <h3>Goal Setting</h3>
-          <p>Set clear goals and milestones to stay motivated on your journey.</p>
-        </div>
-        <div class="feature-card">
-          <div class="card-shine"></div>
-          <div class="feature-icon"><span>💊</span></div>
-          <h3>Routine Builder</h3>
-          <p>Create and track skincare routines, workout plans, and daily habits.</p>
-        </div>
-        <div class="feature-card">
-          <div class="card-shine"></div>
-          <div class="feature-icon"><span>🔒</span></div>
-          <h3>Private & Secure</h3>
-          <p>Your data stays yours. We never sell or share your information.</p>
-        </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="p-6 bg-white/[0.02] border border-white/[0.06] rounded-2xl card-hover group"><div class="w-12 h-12 flex items-center justify-center bg-accent-dim rounded-xl text-2xl mb-4 group-hover:scale-110 transition-transform">🪞</div><h3 class="font-semibold mb-2">Progress Photos</h3><p class="text-sm text-zinc-400">Document your transformation with organized photos and side-by-side comparisons.</p></div>
+        <div class="p-6 bg-white/[0.02] border border-white/[0.06] rounded-2xl card-hover group"><div class="w-12 h-12 flex items-center justify-center bg-accent-dim rounded-xl text-2xl mb-4 group-hover:scale-110 transition-transform">🧠</div><h3 class="font-semibold mb-2">AI Insights</h3><p class="text-sm text-zinc-400">Get personalized recommendations powered by AI to optimize your routine.</p></div>
+        <div class="p-6 bg-white/[0.02] border border-white/[0.06] rounded-2xl card-hover group"><div class="w-12 h-12 flex items-center justify-center bg-accent-dim rounded-xl text-2xl mb-4 group-hover:scale-110 transition-transform">📊</div><h3 class="font-semibold mb-2">Habit Tracking</h3><p class="text-sm text-zinc-400">Build consistency with daily tracking for skincare, fitness, sleep, and more.</p></div>
+        <div class="p-6 bg-white/[0.02] border border-white/[0.06] rounded-2xl card-hover group"><div class="w-12 h-12 flex items-center justify-center bg-accent-dim rounded-xl text-2xl mb-4 group-hover:scale-110 transition-transform">🎯</div><h3 class="font-semibold mb-2">Goal Setting</h3><p class="text-sm text-zinc-400">Set clear goals and milestones to stay motivated on your journey.</p></div>
+        <div class="p-6 bg-white/[0.02] border border-white/[0.06] rounded-2xl card-hover group"><div class="w-12 h-12 flex items-center justify-center bg-accent-dim rounded-xl text-2xl mb-4 group-hover:scale-110 transition-transform">💊</div><h3 class="font-semibold mb-2">Routine Builder</h3><p class="text-sm text-zinc-400">Create and track skincare routines, workout plans, and daily habits.</p></div>
+        <div class="p-6 bg-white/[0.02] border border-white/[0.06] rounded-2xl card-hover group"><div class="w-12 h-12 flex items-center justify-center bg-accent-dim rounded-xl text-2xl mb-4 group-hover:scale-110 transition-transform">🔒</div><h3 class="font-semibold mb-2">Private & Secure</h3><p class="text-sm text-zinc-400">Your data stays yours. We never sell or share your information.</p></div>
       </div>
     </div>
   </section>
 
-  <!-- Marquee Section -->
-  <section class="marquee-section">
-    <div class="marquee-track">
-      <div class="marquee-content">
-        <span>SKINCARE</span><span class="dot"></span>
-        <span>FITNESS</span><span class="dot"></span>
-        <span>STYLE</span><span class="dot"></span>
-        <span>HABITS</span><span class="dot"></span>
-        <span>CONFIDENCE</span><span class="dot"></span>
-        <span>TRANSFORM</span><span class="dot"></span>
-        <span>SKINCARE</span><span class="dot"></span>
-        <span>FITNESS</span><span class="dot"></span>
-        <span>STYLE</span><span class="dot"></span>
-        <span>HABITS</span><span class="dot"></span>
-        <span>CONFIDENCE</span><span class="dot"></span>
-        <span>TRANSFORM</span><span class="dot"></span>
-      </div>
-    </div>
+  <section class="py-5 border-y border-white/[0.06] overflow-hidden">
+    <div class="flex"><div class="flex items-center gap-6" style="animation: marquee 30s linear infinite;">
+      <span class="text-sm font-semibold tracking-[0.15em] gradient-text opacity-60 whitespace-nowrap">SKINCARE</span><span class="w-1 h-1 rounded-full bg-accent opacity-40"></span>
+      <span class="text-sm font-semibold tracking-[0.15em] gradient-text opacity-60 whitespace-nowrap">FITNESS</span><span class="w-1 h-1 rounded-full bg-accent opacity-40"></span>
+      <span class="text-sm font-semibold tracking-[0.15em] gradient-text opacity-60 whitespace-nowrap">STYLE</span><span class="w-1 h-1 rounded-full bg-accent opacity-40"></span>
+      <span class="text-sm font-semibold tracking-[0.15em] gradient-text opacity-60 whitespace-nowrap">HABITS</span><span class="w-1 h-1 rounded-full bg-accent opacity-40"></span>
+      <span class="text-sm font-semibold tracking-[0.15em] gradient-text opacity-60 whitespace-nowrap">CONFIDENCE</span><span class="w-1 h-1 rounded-full bg-accent opacity-40"></span>
+      <span class="text-sm font-semibold tracking-[0.15em] gradient-text opacity-60 whitespace-nowrap">TRANSFORM</span><span class="w-1 h-1 rounded-full bg-accent opacity-40"></span>
+      <span class="text-sm font-semibold tracking-[0.15em] gradient-text opacity-60 whitespace-nowrap">SKINCARE</span><span class="w-1 h-1 rounded-full bg-accent opacity-40"></span>
+      <span class="text-sm font-semibold tracking-[0.15em] gradient-text opacity-60 whitespace-nowrap">FITNESS</span><span class="w-1 h-1 rounded-full bg-accent opacity-40"></span>
+      <span class="text-sm font-semibold tracking-[0.15em] gradient-text opacity-60 whitespace-nowrap">STYLE</span><span class="w-1 h-1 rounded-full bg-accent opacity-40"></span>
+      <span class="text-sm font-semibold tracking-[0.15em] gradient-text opacity-60 whitespace-nowrap">HABITS</span><span class="w-1 h-1 rounded-full bg-accent opacity-40"></span>
+      <span class="text-sm font-semibold tracking-[0.15em] gradient-text opacity-60 whitespace-nowrap">CONFIDENCE</span><span class="w-1 h-1 rounded-full bg-accent opacity-40"></span>
+      <span class="text-sm font-semibold tracking-[0.15em] gradient-text opacity-60 whitespace-nowrap">TRANSFORM</span><span class="w-1 h-1 rounded-full bg-accent opacity-40"></span>
+    </div></div>
   </section>
 
-  <!-- CTA Section -->
-  <section class="cta">
-    <div class="container">
-      <div class="cta-card">
-        <div class="cta-glow"></div>
-        <span class="section-label">Get Started</span>
-        <h2>Start your transformation</h2>
-        <p>Join thousands taking control of their self-improvement journey.</p>
-        <a href="https://apps.apple.com/app/auramax" class="btn btn-primary btn-large">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
-          </svg>
+  <section class="py-24 px-6">
+    <div class="max-w-[1200px] mx-auto">
+      <div class="max-w-[650px] mx-auto text-center p-10 bg-white/[0.02] border border-white/[0.06] rounded-2xl card-hover">
+        <span class="inline-block text-xs font-semibold tracking-[0.12em] uppercase text-accent px-4 py-2 bg-accent-dim rounded-full mb-4">Get Started</span>
+        <h2 class="text-2xl md:text-3xl font-bold tracking-tight mb-3">Start your transformation</h2>
+        <p class="text-zinc-400 mb-6">Join thousands taking control of their self-improvement journey.</p>
+        <a href="https://apps.apple.com/app/auramax" class="inline-flex items-center justify-center gap-2 px-8 py-3 bg-accent text-black font-semibold rounded-full hover:opacity-90 transition-opacity">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
           Download Free
         </a>
       </div>
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer>
-    <div class="container">
-      <div class="footer-content">
-        <a href="/" class="footer-logo">
-          <img src="auramax.png" alt="Auramax">
-        </a>
-        <ul class="footer-links">
-          <li><a href="privacy.html">Privacy</a></li>
-          <li><a href="terms.html">Terms</a></li>
-          <li><a href="mailto:jasprcodes@gmail.com">Contact</a></li>
+  <footer class="border-t border-white/[0.06] py-5">
+    <div class="max-w-[1200px] mx-auto px-6">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
+        <a href="/" class="opacity-40 hover:opacity-60 transition-opacity"><img src="auramax.png" alt="Auramax" class="h-[22px] w-auto"></a>
+        <ul class="flex items-center gap-5">
+          <li><a href="privacy.html" class="text-sm text-zinc-400 hover:text-accent transition-colors">Privacy</a></li>
+          <li><a href="terms.html" class="text-sm text-zinc-400 hover:text-accent transition-colors">Terms</a></li>
+          <li><a href="mailto:jasprcodes@gmail.com" class="text-sm text-zinc-400 hover:text-accent transition-colors">Contact</a></li>
         </ul>
-        <span class="copyright">© 2026 Auramax</span>
+        <span class="text-sm text-zinc-500">© 2026 Auramax</span>
       </div>
     </div>
   </footer>
 
+  <script src="cursor.js"></script>
   <script>
-    // Intersection Observer for animations
-    const observer = new IntersectionObserver((entries) => {
+    const particlesContainer = document.getElementById('particles');
+    for (let i = 0; i < 15; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+      particle.style.left = Math.random() * 100 + '%';
+      particle.style.animationDuration = (15 + Math.random() * 20) + 's';
+      particle.style.animationDelay = Math.random() * 10 + 's';
+      particlesContainer.appendChild(particle);
+    }
+    let auraAnimated = false;
+    const auraObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in-view');
-
-          // Animate aura score
-          if (entry.target.classList.contains('aura-demo')) {
-            animateAuraScore();
-          }
-
+        if (entry.isIntersecting && !auraAnimated) {
+          auraAnimated = true;
+          const numEl = document.getElementById('aura-number');
+          let current = 0;
+          const interval = setInterval(() => { current++; numEl.textContent = current; if (current >= 87) clearInterval(interval); }, 18);
+          document.getElementById('aura-progress').classList.add('animate');
+          document.querySelectorAll('.metric-fill').forEach(bar => { setTimeout(() => { bar.style.width = bar.dataset.width + '%'; }, 200); });
         }
       });
     }, { threshold: 0.2 });
-
-    // Observe all animated elements
-    document.querySelectorAll('.hero-content, .hero-visual, .section-header, .aura-demo, .eli-card, .feature-card, .cta-card, .step-card').forEach(el => {
-      observer.observe(el);
-    });
-
-    // Aura Score Animation
-    let auraAnimated = false;
-    function animateAuraScore() {
-      if (auraAnimated) return;
-      auraAnimated = true;
-
-      const scoreEl = document.querySelector('.aura-number');
-      const target = parseInt(scoreEl.dataset.target);
-      let current = 0;
-
-      const interval = setInterval(() => {
-        current += 1;
-        scoreEl.textContent = current;
-        if (current >= target) clearInterval(interval);
-      }, 18);
-
-      document.querySelectorAll('.metric-fill').forEach(bar => {
-        const width = bar.dataset.width;
-        setTimeout(() => {
-          bar.style.width = width + '%';
-        }, 200);
-      });
-    }
-
-    // Smooth scroll
+    auraObserver.observe(document.getElementById('aura-card'));
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      });
-    });
-
-    // Custom cursor
-    const cursor = document.querySelector('.cursor');
-    const follower = document.querySelector('.cursor-follower');
-    let mouseX = 0, mouseY = 0;
-    let followerX = 0, followerY = 0;
-
-    document.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      cursor.style.left = mouseX + 'px';
-      cursor.style.top = mouseY + 'px';
-    });
-
-    // Smooth follower
-    function animateFollower() {
-      followerX += (mouseX - followerX) * 0.15;
-      followerY += (mouseY - followerY) * 0.15;
-      follower.style.left = followerX + 'px';
-      follower.style.top = followerY + 'px';
-      requestAnimationFrame(animateFollower);
-    }
-    animateFollower();
-
-    // Cursor hover effects
-    document.querySelectorAll('a, button, .btn, .feature-card, .step-card, .eli-card').forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        cursor.classList.add('cursor-hover');
-        follower.classList.add('follower-hover');
-      });
-      el.addEventListener('mouseleave', () => {
-        cursor.classList.remove('cursor-hover');
-        follower.classList.remove('follower-hover');
-      });
-    });
-
-    // Magnetic buttons
-    document.querySelectorAll('.btn-primary').forEach(btn => {
-      btn.addEventListener('mousemove', (e) => {
-        const rect = btn.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
-        btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
-      });
-      btn.addEventListener('mouseleave', () => {
-        btn.style.transform = '';
-      });
-    });
-
-    // Card tilt effect
-    document.querySelectorAll('.feature-card, .aura-card, .eli-card, .cta-card').forEach(card => {
-      card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width - 0.5;
-        const y = (e.clientY - rect.top) / rect.height - 0.5;
-        card.style.transform = `perspective(1000px) rotateY(${x * 10}deg) rotateX(${-y * 10}deg) scale(1.02)`;
-      });
-      card.addEventListener('mouseleave', () => {
-        card.style.transform = '';
-      });
-    });
-
-    // Text Scramble Effect
-    class TextScramble {
-      constructor(el) {
-        this.el = el;
-        this.chars = '!<>-_\\/[]{}—=+*^?#________';
-        this.update = this.update.bind(this);
-      }
-      setText(newText) {
-        const oldText = this.el.innerText;
-        const length = Math.max(oldText.length, newText.length);
-        const promise = new Promise(resolve => this.resolve = resolve);
-        this.queue = [];
-        for (let i = 0; i < length; i++) {
-          const from = oldText[i] || '';
-          const to = newText[i] || '';
-          const start = Math.floor(Math.random() * 40);
-          const end = start + Math.floor(Math.random() * 40);
-          this.queue.push({ from, to, start, end });
-        }
-        cancelAnimationFrame(this.frameRequest);
-        this.frame = 0;
-        this.update();
-        return promise;
-      }
-      update() {
-        let output = '';
-        let complete = 0;
-        for (let i = 0, n = this.queue.length; i < n; i++) {
-          let { from, to, start, end, char } = this.queue[i];
-          if (this.frame >= end) {
-            complete++;
-            output += to;
-          } else if (this.frame >= start) {
-            if (!char || Math.random() < 0.28) {
-              char = this.chars[Math.floor(Math.random() * this.chars.length)];
-              this.queue[i].char = char;
-            }
-            output += `<span style="color: var(--accent)">${char}</span>`;
-          } else {
-            output += from;
-          }
-        }
-        this.el.innerHTML = output;
-        if (complete === this.queue.length) {
-          this.resolve();
-        } else {
-          this.frameRequest = requestAnimationFrame(this.update);
-          this.frame++;
-        }
-      }
-    }
-
-    // Apply scramble to gradient text
-    const phrases = ['best self.', 'full potential.', 'glow up.', 'next level.'];
-    const scrambleEl = document.querySelector('.gradient-text');
-    if (scrambleEl) {
-      const fx = new TextScramble(scrambleEl);
-      let counter = 0;
-      const next = () => {
-        fx.setText(phrases[counter]).then(() => {
-          setTimeout(next, 3000);
-        });
-        counter = (counter + 1) % phrases.length;
-      };
-      setTimeout(next, 2000);
-    }
-
-    // Floating particles
-    function createParticles() {
-      const particleContainer = document.createElement('div');
-      particleContainer.className = 'particles-container';
-      particleContainer.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;';
-      document.body.appendChild(particleContainer);
-
-      for (let i = 0; i < 15; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        particle.style.left = Math.random() * 100 + '%';
-        particle.style.animationDuration = (15 + Math.random() * 20) + 's';
-        particle.style.animationDelay = Math.random() * 10 + 's';
-        particleContainer.appendChild(particle);
-      }
-    }
-    createParticles();
-
-    // Parallax effect on scroll
-    let ticking = false;
-    window.addEventListener('scroll', () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          const scrolled = window.pageYOffset;
-
-          // Parallax on phone mockup
-          const phone = document.querySelector('.phone-container');
-          if (phone) {
-            const phoneOffset = phone.getBoundingClientRect().top + scrolled;
-            const parallaxValue = (scrolled - phoneOffset + 500) * 0.1;
-            phone.style.transform = `translateY(${Math.min(Math.max(parallaxValue, -30), 30)}px)`;
-          }
-
-          // Parallax on ambient orbs
-          document.querySelectorAll('.ambient-orb').forEach((orb, i) => {
-            const speed = 0.02 + (i * 0.01);
-            orb.style.transform = `translateY(${scrolled * speed}px)`;
-          });
-
-          ticking = false;
-        });
-        ticking = true;
-      }
-    });
-
-    // Ripple effect on buttons
-    document.querySelectorAll('.btn').forEach(btn => {
-      btn.style.position = 'relative';
-      btn.style.overflow = 'hidden';
-      btn.addEventListener('click', function(e) {
-        const rect = this.getBoundingClientRect();
-        const ripple = document.createElement('span');
-        ripple.className = 'ripple';
-        ripple.style.left = (e.clientX - rect.left) + 'px';
-        ripple.style.top = (e.clientY - rect.top) + 'px';
-        this.appendChild(ripple);
-        setTimeout(() => ripple.remove(), 600);
-      });
-    });
-
-    // Smooth number counter with easing
-    function animateValue(el, start, end, duration) {
-      const range = end - start;
-      let startTime = null;
-
-      function step(timestamp) {
-        if (!startTime) startTime = timestamp;
-        const progress = Math.min((timestamp - startTime) / duration, 1);
-        const easeOut = 1 - Math.pow(1 - progress, 3);
-        el.textContent = Math.floor(start + range * easeOut);
-        if (progress < 1) {
-          requestAnimationFrame(step);
-        }
-      }
-      requestAnimationFrame(step);
-    }
-
-    // Enhanced nav link hover
-    document.querySelectorAll('.nav-links a').forEach(link => {
-      link.classList.add('hover-underline');
-    });
-
-    // Add gradient-border class to cards for animated border effect
-    document.querySelectorAll('.feature-card, .step-card').forEach(card => {
-      card.classList.add('gradient-border');
+      anchor.addEventListener('click', function(e) { e.preventDefault(); const target = document.querySelector(this.getAttribute('href')); if (target) target.scrollIntoView({ behavior: 'smooth' }); });
     });
   </script>
 </body>
