@@ -40,7 +40,7 @@
   <section class="hero">
     <div class="container">
       <div class="hero-content">
-        <div class="hero-badge tilt-element">
+        <div class="hero-badge">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
             <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
           </svg>
@@ -52,17 +52,17 @@
         </h1>
         <p class="hero-desc">Track skincare, fitness, style, and daily habits. Get AI-powered insights that actually help you level up.</p>
         <div class="hero-buttons">
-          <a href="https://apps.apple.com/app/auramax" class="btn btn-primary tilt-element">
+          <a href="https://apps.apple.com/app/auramax" class="btn btn-primary">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
               <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
             </svg>
             Download for iPhone
           </a>
-          <a href="#features" class="btn btn-secondary tilt-element">Learn More</a>
+          <a href="#features" class="btn btn-secondary">Learn More</a>
         </div>
       </div>
       <div class="hero-visual">
-        <div class="phone-container tilt-element" data-tilt-scale="1.02">
+        <div class="phone-container">
           <div class="phone-glow"></div>
           <div class="phone-frame">
             <div class="phone-screen">
@@ -70,6 +70,58 @@
               <p>app-screenshot.png</p>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="stats-section">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-number" data-target="10">0K+</div>
+          <div class="stat-label">Active Users</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" data-target="4.9">0</div>
+          <div class="stat-label">App Store Rating</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" data-target="500">0K+</div>
+          <div class="stat-label">Habits Tracked</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" data-target="95">0%</div>
+          <div class="stat-label">User Satisfaction</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section class="how-section" id="how-it-works">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">How It Works</span>
+        <h2>Start in <span class="gradient-text">3 simple steps</span></h2>
+        <p>Getting started with Auramax takes less than a minute.</p>
+      </div>
+      <div class="how-steps">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <h3>Download the App</h3>
+          <p>Get Auramax free from the App Store. No account required to explore.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <h3>Set Your Goals</h3>
+          <p>Tell us what you want to improve - skincare, fitness, style, or habits.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <h3>Track & Improve</h3>
+          <p>Log daily progress and get personalized AI insights to level up.</p>
         </div>
       </div>
     </div>
@@ -84,7 +136,7 @@
         <p>A personalized metric that evolves with your journey</p>
       </div>
 
-      <div class="aura-demo tilt-element" data-tilt-scale="1.01">
+      <div class="aura-demo">
         <div class="aura-card">
           <div class="aura-ring-container">
             <svg viewBox="0 0 200 200" class="aura-ring">
@@ -141,7 +193,7 @@
   <!-- AI Section - Mr. Eli -->
   <section class="eli-section" id="ai">
     <div class="container">
-      <div class="eli-card tilt-element" data-tilt-scale="1.01">
+      <div class="eli-card">
         <div class="eli-glow"></div>
         <div class="eli-content">
           <div class="eli-avatar-container">
@@ -184,41 +236,87 @@
         <p>Powerful tools designed to help you track progress and build habits that stick.</p>
       </div>
       <div class="features-grid">
-        <div class="feature-card tilt-element">
+        <div class="feature-card">
           <div class="card-shine"></div>
           <div class="feature-icon"><span>🪞</span></div>
           <h3>Progress Photos</h3>
           <p>Document your transformation with organized photos and side-by-side comparisons.</p>
         </div>
-        <div class="feature-card tilt-element">
+        <div class="feature-card">
           <div class="card-shine"></div>
           <div class="feature-icon"><span>🧠</span></div>
           <h3>AI Insights</h3>
           <p>Get personalized recommendations powered by AI to optimize your routine.</p>
         </div>
-        <div class="feature-card tilt-element">
+        <div class="feature-card">
           <div class="card-shine"></div>
           <div class="feature-icon"><span>📊</span></div>
           <h3>Habit Tracking</h3>
           <p>Build consistency with daily tracking for skincare, fitness, sleep, and more.</p>
         </div>
-        <div class="feature-card tilt-element">
+        <div class="feature-card">
           <div class="card-shine"></div>
           <div class="feature-icon"><span>🎯</span></div>
           <h3>Goal Setting</h3>
           <p>Set clear goals and milestones to stay motivated on your journey.</p>
         </div>
-        <div class="feature-card tilt-element">
+        <div class="feature-card">
           <div class="card-shine"></div>
           <div class="feature-icon"><span>💊</span></div>
           <h3>Routine Builder</h3>
           <p>Create and track skincare routines, workout plans, and daily habits.</p>
         </div>
-        <div class="feature-card tilt-element">
+        <div class="feature-card">
           <div class="card-shine"></div>
           <div class="feature-icon"><span>🔒</span></div>
           <h3>Private & Secure</h3>
           <p>Your data stays yours. We never sell or share your information.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="testimonials-section" id="testimonials">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Testimonials</span>
+        <h2>Loved by <span class="gradient-text">thousands</span></h2>
+        <p>See what our users are saying about their transformation.</p>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"Finally an app that actually helps me stay consistent. The AI insights are surprisingly accurate and helpful."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">JM</div>
+            <div class="testimonial-info">
+              <span class="testimonial-name">Jake M.</span>
+              <span class="testimonial-handle">@jakem_fit</span>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"I've tried so many self-improvement apps. This is the first one that's actually stuck. Love the clean design."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">SR</div>
+            <div class="testimonial-info">
+              <span class="testimonial-name">Sarah R.</span>
+              <span class="testimonial-handle">@sarahglowup</span>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"The progress photos feature is game-changing. Seeing my transformation week by week keeps me motivated."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">DL</div>
+            <div class="testimonial-info">
+              <span class="testimonial-name">David L.</span>
+              <span class="testimonial-handle">@david.levels</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -247,7 +345,7 @@
   <!-- CTA Section -->
   <section class="cta">
     <div class="container">
-      <div class="cta-card tilt-element" data-tilt-scale="1.01">
+      <div class="cta-card">
         <div class="cta-glow"></div>
         <span class="section-label">Get Started</span>
         <h2>Start your transformation</h2>
@@ -280,50 +378,6 @@
   </footer>
 
   <script>
-    // 3D Tilt Effect
-    class TiltEffect {
-      constructor(element) {
-        this.element = element;
-        this.scale = element.dataset.tiltScale || 1;
-        this.max = 8;
-        this.shine = element.querySelector('.card-shine');
-        this.bindEvents();
-      }
-
-      bindEvents() {
-        this.element.addEventListener('mouseenter', () => this.element.style.transition = 'transform 0.1s ease');
-        this.element.addEventListener('mousemove', (e) => this.onMouseMove(e));
-        this.element.addEventListener('mouseleave', () => this.onMouseLeave());
-      }
-
-      onMouseMove(e) {
-        const rect = this.element.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-
-        const rotateX = ((y - centerY) / centerY) * -this.max;
-        const rotateY = ((x - centerX) / centerX) * this.max;
-
-        this.element.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(${this.scale}, ${this.scale}, ${this.scale})`;
-
-        if (this.shine) {
-          this.shine.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.15) 0%, transparent 60%)`;
-        }
-      }
-
-      onMouseLeave() {
-        this.element.style.transition = 'transform 0.5s ease';
-        this.element.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
-        if (this.shine) {
-          this.shine.style.background = 'transparent';
-        }
-      }
-    }
-
-    document.querySelectorAll('.tilt-element').forEach(el => new TiltEffect(el));
-
     // Intersection Observer for animations
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -334,11 +388,17 @@
           if (entry.target.classList.contains('aura-demo')) {
             animateAuraScore();
           }
+
+          // Animate stats
+          if (entry.target.classList.contains('stat-item')) {
+            animateStatNumber(entry.target);
+          }
         }
       });
     }, { threshold: 0.2 });
 
-    document.querySelectorAll('.hero-content, .hero-visual, .section-header, .aura-demo, .eli-card, .feature-card, .cta-card').forEach(el => {
+    // Observe all animated elements
+    document.querySelectorAll('.hero-content, .hero-visual, .section-header, .aura-demo, .eli-card, .feature-card, .cta-card, .step-card, .stat-item, .testimonial-card').forEach(el => {
       observer.observe(el);
     });
 
@@ -366,24 +426,46 @@
       });
     }
 
-    // Parallax effect on ambient orbs
-    let mouseX = 0, mouseY = 0;
-    document.addEventListener('mousemove', (e) => {
-      mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-      mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
-    });
+    // Stat Number Animation
+    const animatedStats = new Set();
+    function animateStatNumber(statItem) {
+      if (animatedStats.has(statItem)) return;
+      animatedStats.add(statItem);
 
-    function animateOrbs() {
-      const orbs = document.querySelectorAll('.ambient-orb');
-      orbs.forEach((orb, i) => {
-        const speed = (i + 1) * 15;
-        const x = mouseX * speed;
-        const y = mouseY * speed;
-        orb.style.transform = `translate(${x}px, ${y}px)`;
-      });
-      requestAnimationFrame(animateOrbs);
+      const numberEl = statItem.querySelector('.stat-number');
+      const text = numberEl.textContent;
+      const hasK = text.includes('K');
+      const hasPercent = text.includes('%');
+      const target = parseFloat(numberEl.dataset.target);
+
+      let current = 0;
+      const duration = 1500;
+      const steps = 60;
+      const increment = target / steps;
+
+      const interval = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+          current = target;
+          clearInterval(interval);
+        }
+
+        let displayValue;
+        if (target === 4.9) {
+          displayValue = current.toFixed(1);
+        } else {
+          displayValue = Math.floor(current);
+        }
+
+        if (hasK) {
+          numberEl.textContent = displayValue + 'K+';
+        } else if (hasPercent) {
+          numberEl.textContent = displayValue + '%';
+        } else {
+          numberEl.textContent = displayValue;
+        }
+      }, duration / steps);
     }
-    animateOrbs();
 
     // Smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
